@@ -1,0 +1,17 @@
+{
+  "name": "it122-assignment",
+  "version": "1.0.0",
+  "description": "Node.js web server assignment for IT122",
+  "main": "index.js",
+  "type": "module", 
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PasRMik/it122"
+  },
+  "author": "Pascal",
+  "license": "ISC",
+  "dependencies": {}
+}
