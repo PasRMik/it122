@@ -1,26 +1,26 @@
-import http from 'http';
+import express from "express";
+import { getAll, getItem } from "./data.js";
 
-const port = 3000;
+const app = express();
+const PORT = 3000;
 
-const server = http.createServer((req, res) => {
-  // Home page
-  if (req.url === '/' && req.method === 'GET') {
-    res.writeHead(200, { 'Content-Type': 'text/plain' });
-    res.end('Welcome to the Home Page!');
-  } 
-  // About page
-  else if (req.url === '/about' && req.method === 'GET') {
-    res.writeHead(200, { 'Content-Type': 'text/plain' });
-    res.end('About Page: This is Pascal\'s Node.js server assignment.');
-  } 
-  // Any other URL (404 error)
-  else {
-    res.writeHead(404, { 'Content-Type': 'text/plain' });
-    res.end('404 Error: Page not found.');
-  }
+app.set("view engine", "ejs");
+app.use(express.static("public"));
+
+app.get("/", (req, res) => {
+    const games = getAll();
+    res.render("home", { games });
 });
 
-// Start the server
-server.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+app.get("/detail", (req, res) => {
+    const game = getItem(req.query.title);
+    if (game) {
+        res.render("detail", { game });
+    } else {
+        res.status(404).send("Game not found");
+    }
+});
+
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
 });

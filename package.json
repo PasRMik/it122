@@ -3,15 +3,23 @@
   "version": "1.0.0",
   "description": "Node.js web server assignment for IT122",
   "main": "index.js",
-  "type": "module", 
+  "type": "module",
   "scripts": {
     "start": "node index.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/PasRMik/it122"
+    "url": "git+https://github.com/PasRMik/it122.git"
   },
   "author": "Pascal",
   "license": "ISC",
-  "dependencies": {}
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/PasRMik/it122/issues"
+  },
+  "homepage": "https://github.com/PasRMik/it122#readme",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.21.2"
+  }
 }

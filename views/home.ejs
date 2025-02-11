@@ -1,0 +1,9 @@
+<h1>PS5 Games</h1>
+<ul>
+    <% games.forEach(game => { %>
+        <li><a href="/detail?title=<%= game.title %>"><%= game.title %></a></li>
+    <% }) %>
+</ul>
+<head>
+  <link rel="stylesheet" href="/styles.css">
+</head>
