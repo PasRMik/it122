@@ -1,15 +1,26 @@
-const games = [
-  { title: "Tekken 8", developer: "Bandai Namco", releaseYear: 2024, genre: "Fighting" },
-  { title: "God of War: Ragnarok", developer: "Santa Monica Studio", releaseYear: 2022, genre: "Action-Adventure" },
-  { title: "Spider-Man 2", developer: "Insomniac Games", releaseYear: 2023, genre: "Action" },
-  { title: "Elden Ring", developer: "FromSoftware", releaseYear: 2022, genre: "RPG" },
-  { title: "Final Fantasy XVI", developer: "Square Enix", releaseYear: 2023, genre: "RPG" }
-];
+import { Game } from "./models/game.js";
 
-export function getAll() {
-  return games;
+// Get All games from MongoDB
+export async function getAll() {
+    return await Game.find();
 }
 
-export function getItem(title) {
-  return games.find(game => game.title === title);
+// Get a single game by title
+export async function getItem(title) {
+    return await Game.findOne({ title });
+}
+
+// Add or update a game
+export async function addOrUpdateItem(gameData) {
+    return await Game.findOneAndUpdate(
+        { title: gameData.title }, // Search by title
+        gameData, // Update with new data
+        { upsert: true, new: true } // Create if not found, return updated data
+    );
+}
+
+// Delete a game
+export async function deleteItem(title) {
+    const result = await Game.deleteOne({ title });
+    return result.deletedCount > 0;
 }

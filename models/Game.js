@@ -1,26 +1,24 @@
 import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
-// For security, connectionString should be in a separate file and excluded from git
-const connectionString = "mongodb+srv://freehanddata:PascalDev@cluster0.mongodb.net/test?retryWrites=true";
+// MongoDB Connection String 
+const connectionString = "mongodb://freehanddata:PascalDev@cluster0.mongodb.net:27017/test?retryWrites=true";
 
-mongoose.connect(connectionString, {
-    dbName: 'freehanddata',
-    useNewUrlParser: true,
-    useUnifiedTopology: true
+mongoose.connect(connectionString)
+  .then(() => console.log("Mongoose connected."))
+  .catch(err => console.error("MongoDB connection error:", err));
+
+mongoose.connection.on('error', err => {
+  console.error("Mongoose connection error:", err);
 });
 
-mongoose.connection.on('open', () => {
-  console.log('Mongoose connected.');
-});
-
-// define data model as JSON key/value pairs
-// values indicate the data type of each key
+// Game Schema
 const gameSchema = new Schema({
- title: { type: String, required: true },
- developer: String,
- releaseYear: Number,
- 
+    title: { type: String, required: true },
+    developer: String,
+    releaseYear: Number,
+    genre: String
 });
 
-export const Book = mongoose.model('Game', gameSchema);
+// Model
+export const Game = mongoose.model('Game', gameSchema);
