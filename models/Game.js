@@ -2,9 +2,9 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 // MongoDB Connection String 
-const connectionString = "mongodb://freehanddata:PascalDev@cluster0.mongodb.net:27017/test?retryWrites=true";
+const connectionString ="mongodb+srv://freehanddata:PascalDev@cluster0.1jw8w.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
-mongoose.connect(connectionString)
+mongoose.connect(connectionString,{dbName:'freehanddata'})
   .then(() => console.log("Mongoose connected."))
   .catch(err => console.error("MongoDB connection error:", err));
 
@@ -21,4 +21,4 @@ const gameSchema = new Schema({
 });
 
 // Model
-export const Game = mongoose.model('Game', gameSchema);
+export const Game = mongoose.model('Game', gameSchema, 'videogames');
