@@ -1,10 +1,90 @@
 <h1><%= game.title %> Details</h1>
+
+<!-- Form for editing game details -->
+<form id="gameForm">
+    <label for="title">Title:</label>
+    <input type="text" id="title" name="title" value="<%= game.title %>" required />
+    <br>
+    <label for="developer">Developer:</label>
+    <input type="text" id="developer" name="developer" value="<%= game.developer %>" required />
+    <br>
+    <label for="releaseYear">Release Year:</label>
+    <input type="text" id="releaseYear" name="releaseYear" value="<%= game.releaseYear %>" required />
+    <br>
+    <label for="genre">Genre:</label>
+    <input type="text" id="genre" name="genre" value="<%= game.genre %>" required />
+    <br>
+    <button type="button" onclick="saveGame()">Save</button>
+    <button type="button" onclick="deleteGame()">Delete</button>
+</form>
+
+
+<h2>Current Game Details:</h2>
 <ul>
     <li><strong>Developer:</strong> <%= game.developer %></li>
     <li><strong>Release Year:</strong> <%= game.releaseYear %></li>
     <li><strong>Genre:</strong> <%= game.genre %></li>
 </ul>
+
+<!-- Link to go back to the home page -->
 <a href="/">Back to Home</a>
+
 <head>
     <link rel="stylesheet" href="/styles.css">
 </head>
+
+<script>
+   
+    async function saveGame() {
+        const form = document.getElementById('gameForm');
+        const game = {
+            title: form.title.value,
+            developer: form.developer.value,
+            releaseYear: form.releaseYear.value,
+            genre: form.genre.value
+        };
+
+        try {
+            const response = await fetch('/api/games', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(game)
+            });
+
+            const result = await response.json();
+            if (response.ok) {
+                alert('Game saved successfully!');
+                window.location.href = '/'; // Redirect to home page after saving
+            } else {
+                alert(result.error || 'Error saving game');
+            }
+        } catch (error) {
+            console.error('Error saving game:', error);
+            alert('Error saving game');
+        }
+    }
+
+    
+    async function deleteGame() {
+        const gameTitle = "<%= game.title %>";  // Pass game title from ejs
+
+        try {
+            const response = await fetch(`/api/games/${gameTitle}`, {
+                method: 'DELETE',
+            });
+
+            const result = await response.json();
+            if (response.ok) {
+                alert('Game deleted successfully!');
+                window.location.href = '/'; 
+            } else {
+                alert(result.error || 'Error deleting game');
+            }
+        } catch (error) {
+            console.error('Error deleting game:', error);
+            alert('Error deleting game');
+        }
+    }
+</script>
