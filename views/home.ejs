@@ -1,12 +1,11 @@
 <html>
 <head>
-    <title>PS5 Games</title>
+    <title>React App Demo</title>
 
-    <!-- React and ReactDOM CDN -->
     <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
 
-    <!-- Babel CDN for JSX -->
+    <!-- Don't use this in production: -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
 
@@ -15,32 +14,27 @@
 <div id="root"></div>
 
 <script type="text/babel">
+    
+    const items = <%- items %>;  
+    console.log(items);  
 
-    // server (the games array)
-    const games = <%- JSON.stringify(games) %>; // JS variable
-
-    console.log(games); 
-
-    // React component
-    const Home = () => {
-      return (
-        <div>
-          <h1>PS5 Games</h1>
-          <ul>
-            {games.map((game) => (
-              <li key={game.title}>
-                <a href={`/detail?title=${encodeURIComponent(game.title)}`}>
-                  {game.title}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      );
+    
+    const App = () => {
+        return (
+            <div>
+                <h2>Game List</h2>
+                <ul>
+                    {items.map((item) => (
+                        <li key={item.title}>
+                            <a href={`/detail?title=${item.title}`}>{item.title}</a>  
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        );
     }
 
-    //  root element
-    ReactDOM.render(<Home />, document.getElementById('root'));
+    ReactDOM.render(<App />, document.getElementById('root'));
 </script>
 
 </body>

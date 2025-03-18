@@ -5,10 +5,7 @@ import { getAll, getItem, addOrUpdateItem, deleteItem } from "./data.js";
 const app = express();
 const PORT = 3000;
 
-
 app.use(cors());
-
-
 app.use(express.json());
 
 app.set("view engine", "ejs");
@@ -17,9 +14,9 @@ app.use(express.static("public"));
 // Home Route (UI)
 app.get("/", async (req, res) => {
     const games = await getAll();
-    res.render("home", { games });
+    // Pass 'games' as a JSON string to the EJS template
+    res.render("home", { items: JSON.stringify(games) });
 });
-
 
 app.get("/detail", async (req, res) => {
     const game = await getItem(req.query.title);
