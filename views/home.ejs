@@ -1,9 +1,47 @@
-<h1>PS5 Games</h1>
-<ul>
-    <% games.forEach(game => { %>
-        <li><a href="/detail?title=<%= game.title %>"><%= game.title %></a></li>
-    <% }) %>
-</ul>
+<html>
 <head>
-  <link rel="stylesheet" href="/styles.css">
+    <title>PS5 Games</title>
+
+    <!-- React and ReactDOM CDN -->
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+
+    <!-- Babel CDN for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
+
+<body>
+
+<div id="root"></div>
+
+<script type="text/babel">
+
+    // server (the games array)
+    const games = <%- JSON.stringify(games) %>; // JS variable
+
+    console.log(games); 
+
+    // React component
+    const Home = () => {
+      return (
+        <div>
+          <h1>PS5 Games</h1>
+          <ul>
+            {games.map((game) => (
+              <li key={game.title}>
+                <a href={`/detail?title=${encodeURIComponent(game.title)}`}>
+                  {game.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      );
+    }
+
+    //  root element
+    ReactDOM.render(<Home />, document.getElementById('root'));
+</script>
+
+</body>
+</html>
