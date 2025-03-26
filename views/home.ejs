@@ -1,29 +1,41 @@
 <html>
 <head>
-<title>Game List</title>
-<script src="https://unpkg.com/react@17/umd/react.development.js"></script>
-<script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <title>React App Demo</title>
+
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
+
 <body>
+
 <div id="root"></div>
+
 <script type="text/babel">
-const items = <%- JSON.stringify(items) %>; // Safer and cleaner to stringify
-const App = () => {
-return (
-<div>
-<h2>Game List</h2>
-<ul>
-{items.map((item) => (
-<li key={item.title}>
-<a href={`/detail?title=${item.title}`}>{item.title}</a>
-</li>
-))}
-</ul>
-</div>
-);
-}
-ReactDOM.render(<App />, document.getElementById('root'));
+    
+    const items = <%- items %>;  
+    console.log(items);  
+
+    
+    const App = () => {
+        return (
+            <div>
+                <h2>Game List</h2>
+                <ul>
+                    {items.map((item) => (
+                        <li key={item.title}>
+                            <a href={`/detail?title=${item.title}`}>{item.title}</a>  
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        );
+    }
+
+    ReactDOM.render(<App />, document.getElementById('root'));
 </script>
+
 </body>
 </html>
